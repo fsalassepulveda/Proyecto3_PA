@@ -12,6 +12,7 @@ rm -r scripts.zip
 chmod 777 scripts
 cd scripts
 cp -a generateGraphic.py /scripts $HOME/Escritorio/Resultados
+rm -r scripts
 " > Lista.txt
 
 
@@ -40,24 +41,32 @@ cat Panguilemodetalle2014-2015a.csv Panguilemodetalle2014-2015b.csv  |grep 2015 
 cat Panguilemodetalle2010-2011.csv   |grep 2010 | sed 's/;/ /g' | sed 's/-/ /g' |awk '{print $2 " " $9}'>temperatura_2010.txt
 cat Panguilemodetalle2010-2011.csv Panguilemodetalle2011-2012.csv  |grep 2011 | sed 's/;/ /g' | sed 's/-/ /g' |awk '{print $2  " " $9}'>temperatura_2011.txt
 cat Panguilemodetalle2011-2012.csv Panguilemodetalle2012-2013.csv  |grep 2012 | sed 's/;/ /g' | sed 's/-/ /g' |awk '{print  $2  " " $9}'>temperatura_2012.txt
-cat Panguilemodetalle2014-2015a.csv Panguilemodetalle2014-2015b.csv  |grep 2014 | sed 's/;/ /g' | sed 's/-/ /g' |awk '{print $2 " " $9}'>temperatura_2014.txt
+cat Panguilemodetalle2013-2014.csv Panguilemodetalle2014-2015a.csv Panguilemodetalle2014-2015b.csv  |grep 2014 | sed 's/;/ /g' | sed 's/-/ /g' |awk '{print $2 " " $9}'>temperatura_2014.txt
 cat Panguilemodetalle2012-2013.csv Panguilemodetalle2013-2014.csv  |grep 2013 | sed 's/;/ /g' | sed 's/-/ /g' |awk '{print $2  " " $9}'>temperatura_2013.txt
-cat Panguilemodetalle2013-2014.csv Panguilemodetalle2014-2015a.csv Panguilemodetalle2014-2015b.csv  |grep 2015 | sed 's/;/ /g' | sed 's/-/ /g' |awk '{print $2 " " $9}'>temperatura_2015.txt
+cat Panguilemodetalle2014-2015a.csv Panguilemodetalle2014-2015b.csv  |grep 2015 | sed 's/;/ /g' | sed 's/-/ /g' |awk '{print $2 " " $9}'>temperatura_2015.txt
+
+
+for i in `seq 5 12`;do
+	cat humedad_2010.txt |awk '$1=='$i' {prom+=$2; sum+=1} ;END {print '$i' ";" prom/sum}' >> humedad1_2010.csv
+	cat humedad_2014.txt |awk '$1=='$i' {prom+=$2; sum+=1} ;END {print '$i'  ";" prom/sum}'|sed 's/-nan/0/g' >> humedad1_2014.csv
+	cat temperatura_2014.txt |awk '$1=='$i' {prom+=$2; sum+=1} ;END {print '$i'  ";" prom/sum}'|sed 's/-nan/0/g' >> temperatura1_2014.csv
+	cat temperatura_2010.txt |awk '$1 =='$i' {prom+=$2; sum+=1} ;END {print '$i'  ";" prom/sum}'|sed 's/-nan/0/g' >> temperatura1_2010.csv
+done 
+
+for i in `seq 1 4`;do
+	cat humedad_2015.txt |awk '$1=='$i' {prom+=$2; sum+=1} ;END {print '$i'  ";" prom/sum}'|sed 's/-nan/0/g' >> humedad1_2015.csv
+	cat temperatura_2015.txt |awk '$1=='$i' {prom+=$2; sum+=1} ;END {print '$i'";" prom/sum}' |sed 's/-nan/0/g' >> temperatura1_2015.csv
+done 
 
 for i in `seq 1 12`;do
-	cat humedad_2010.txt |awk '$1=='$i' {prom+=$2; sum+=1};END {print '$i' ";" prom/sum}'|sed 's/-nan/0/g' >> humedad1_2010.csv
 	cat humedad_2011.txt |awk '$1=='$i' {prom+=$2; sum+=1} ;END {print '$i' ";" prom/sum}'  |sed 's/-nan/0/g'>> humedad1_2011.csv
 	cat humedad_2012.txt |awk '$1=='$i' {prom+=$2; sum+=1} ;END {print '$i'  ";" prom/sum}' |sed 's/-nan/0/g' >> humedad1_2012.csv
 	cat humedad_2013.txt |awk '$1=='$i' {prom+=$2; sum+=1} ;END {print '$i'  ";" prom/sum}' |sed 's/-nan/0/g'>> humedad1_2013.csv
-	cat humedad_2014.txt |awk '$1=='$i' {prom+=$2; sum+=1} ;END {print '$i'  ";" prom/sum}'|sed 's/-nan/0/g' >> humedad1_2014.csv
-	cat humedad_2015.txt |awk '$1=='$i' {prom+=$2; sum+=1} ;END {print '$i'  ";" prom/sum}'|sed 's/-nan/0/g' >> humedad1_2015.csv
 
-	cat temperatura_2010.txt |awk '$1 =='$i' {prom+=$2; sum+=1} ;END {print '$i'  ";" prom/sum}'|sed 's/-nan/0/g' >> temperatura1_2010.csv
 	cat temperatura_2011.txt |awk '$1=='$i' {prom+=$2; sum+=1} ;END {print '$i'  ";" prom/sum}' |sed 's/-nan/0/g'>> temperatura1_2011.csv
 	cat temperatura_2012.txt |awk '$1=='$i' {prom+=$2; sum+=1} ;END {print '$i'  ";" prom/sum}' |sed 's/-nan/0/g'>> temperatura1_2012.csv
 	cat temperatura_2013.txt |awk '$1=='$i' {prom+=$2; sum+=1} ;END {print '$i'  ";" prom/sum}'|sed 's/-nan/0/g' >> temperatura1_2013.csv
-	cat temperatura_2014.txt |awk '$1=='$i' {prom+=$2; sum+=1} ;END {print '$i'  ";" prom/sum}'|sed 's/-nan/0/g' >> temperatura1_2014.csv
-	cat temperatura_2015.txt |awk '$1=='$i' {prom+=$2; sum+=1} ;END {print '$i'";" prom/sum}' |sed 's/-nan/0/g' >> temperatura1_2015.csv
+	
 
 done
 
