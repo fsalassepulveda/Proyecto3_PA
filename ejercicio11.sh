@@ -79,6 +79,8 @@ for i in `seq 0  5`; do
 	python generateGraphic.py anio_201$i 'Temperatura' ./anio_201$i/temperatura1_201$i.csv 'Meses' 'Temperatura' '%Temperatura'
 
 done
+
+echo "TODO LISTO, ADIOS"
 	
 
  
